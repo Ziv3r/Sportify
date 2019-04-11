@@ -128,8 +128,6 @@ class _MyNewEventState extends State<NewEvent> {
             child: Text("Submit&Invite"),
             onPressed: (){
               debugPrint("invite your friends dude ");
-              
-              
               request['name'] = _nameController.text; 
               request['maxCapacity'] =_capacityController.text; 
               request['description'] = _descriptionController.text; 
