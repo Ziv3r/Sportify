@@ -139,14 +139,18 @@ class _MyNewEventState extends State<NewEvent> {
                          'Content-Type' : 'application/json'},
               body: json.encode(request), 
               ).then((reply){
-                debugPrint(reply.body);
-              });
+                final _tmp = json.decode(reply.body);
+                final _id = _tmp['createdEvent']['_id'];
 
-              myGoogleMap.myMarkers['dummyid'] = Marker(
-                markerId: MarkerId('dummyid'),
+                 myGoogleMap.myMarkers[_id] = Marker(
+                
+                markerId: MarkerId(_id),
                 position: LatLng(request['lat'], request['long']), 
                 onTap: (){}
                 );
+              });
+
+             
 
               //look for the googlemap Controler to add marker 
 

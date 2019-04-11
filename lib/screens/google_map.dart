@@ -40,8 +40,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
       controller.future.then((onValue) {
         onValue.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
             target: LatLng(value.latitude, value.longitude), zoom: 15.0)));
-        http
-            .get('http://' +
+        http.get('http://' +
                 server +
                 ':8000/event?lat=${value.latitude}&long=${value.longitude}&radius=2000',
                 headers: {'Authorization' : 'Bearer ${daUser.tokenOfConnection}'})
@@ -50,7 +49,6 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
           final List<dynamic> _tmp = _body['events'];
           
           final List<String> _ids = _tmp.cast<String>().toList();
-debugPrint("flag");
           //final _tmp = Map<String, dynamic>.from(_body);
           //final _tmp = _body['events'] as List;
           //final _id_list = List<String>.from(_tmp.values);
@@ -59,7 +57,6 @@ debugPrint("flag");
               final _body = json.decode(inreply.body);
               final _tmp = _body["event"]["location"];
               final List<double> _coords = _tmp.cast<double>().toList();
-              debugPrint("flag");
               setState(() {
               myMarkers[id] = Marker(
                 markerId: MarkerId(id),

@@ -92,6 +92,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:Colors.black,
         title: Text("Sportify"),
         actions: <Widget>[
           IconButton(
@@ -115,19 +116,15 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text("Search by"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/search_by');
-              },
-            ),
-            ListTile(
               title: Text("Events "),
               onTap: () {},
             ),
             ListTile(
               title: Text("My Events "),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/my_events');
+              },
             ),
             ListTile(
               title: Text("Settings"),
@@ -139,7 +136,7 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.search),
         onPressed: () {
-          showFilter(context);
+          Navigator.pushNamed(context, '/search_by');
         },
       ),
       body: MyGoogleMap(),
@@ -172,8 +169,7 @@ class _ListOfFilersState extends State<ListOfFilters> {
           title: Text("Soccer"),
           onChanged: (value) {
             setState(() {
-                           value? filterBy.add("socer"): filterBy.remove("socer");
- 
+            value? filterBy.add("socer"): filterBy.remove("socer");
             });
           },
         ),
