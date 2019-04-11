@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'login.dart' as daUser;
+
 final server = '192.168.137.1';
 class Home extends StatefulWidget {
   @override
@@ -15,30 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var theDate = DateTime.now();
 
-  void showEvent(BuildContext context, String eventId) {
-    showModalBottomSheet(
-      context: context,
-      builder:(builder){
-        http.get('http://${server}:8000/event/enroll?eventId=$eventId',
-        headers: { 'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5vYW13YUBnbWFpbC5jb20iLCJ1c2VySWQiOiI1Y2FmNDI2ODUwMTVjZjBmNzYxOTdlNTIiLCJpYXQiOjE1NTQ5OTAzNjYsImV4cCI6MTU1NDk5Mzk2Nn0.0bCwaL0cEI5o87rafn1GaCAmx4wCpp4_eDxuTQejuzQ'},
-        ).then((reply){
-          final _body = json.decode(reply.body);
-          ListView(children: <Widget>[
-              ListTile(title: Text('Name: ' + _body['name'])),
-              ListTile(title: Text('Category: '+ _body['category']),),
-              ListTile(title: Text('Capacity: ' + _body['capacity'])),
-              //ListTile(title: Text())
-              Row(children: <Widget>[
-                RaisedButton(child: Text('Join'),
-                onPressed: (){},),
-                RaisedButton(child: Text('Back'),
-                onPressed: (){},)
-              ],)
-          ],);
-        });
-      }
-    );
-  }
+
   void showFilter(BuildContext context) {
     showDialog(
         context: context,
@@ -119,6 +98,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.notifications),
             onPressed: () {
               debugPrint("my notification");
+              showEvent(context, '5caf912f1373093b4c401d61');
             },
           )
         ],
@@ -222,3 +202,28 @@ class _ListOfFilersState extends State<ListOfFilters> {
 }
 
 //---------------------------------------class of List of filters -------------//
+  void showEvent(BuildContext context, String eventId) {
+    showModalBottomSheet(
+      context: context,
+      builder:(builder){
+        debugPrint(eventId);
+        http.get('http://${server}:8000/event?id=$eventId',
+        headers: { 'Authorization' : 'Bearer ${daUser.tokenOfConnection}'},
+        ).then((reply){
+          final _body = json.decode(reply.body)['event'];
+          ListView(children: <Widget>[
+              ListTile(title: Text('Name: ' + _body['name'])),
+              ListTile(title: Text('Category: '+ _body['category']),),
+              ListTile(title: Text('Capacity: ' + _body['maxCapacity'].toString())),
+              //ListTile(title: Text())
+              Row(children: <Widget>[
+                RaisedButton(child: Text('Join'),
+                onPressed: (){},),
+                RaisedButton(child: Text('Back'),
+                onPressed: (){},)
+              ],)
+          ],);
+        });
+      }
+    );
+  }

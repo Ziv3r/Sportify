@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'login.dart' as daUser;
+import 'home.dart' as daHome;
 
 Map<String, Marker> myMarkers = new Map();
 final server = '192.168.137.1';
@@ -41,7 +43,8 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
         http
             .get('http://' +
                 server +
-                ':8000/event?lat=${value.latitude}&long=${value.longitude}&radius=2000')
+                ':8000/event?lat=${value.latitude}&long=${value.longitude}&radius=2000',
+                headers: {'Authorization' : 'Bearer ${daUser.tokenOfConnection}'})
             .then((reply) {
           final _body = json.decode(reply.body);
           final List<dynamic> _tmp = _body['events'];
@@ -58,11 +61,12 @@ debugPrint("flag");
               final List<double> _coords = _tmp.cast<double>().toList();
               debugPrint("flag");
               setState(() {
-                
-              
               myMarkers[id] = Marker(
                 markerId: MarkerId(id),
-                position: LatLng(_coords[1], _coords[0])
+                position: LatLng(_coords[1], _coords[0]),
+                onTap: (){
+                  daHome.showEvent(context, id);
+                }
               );
               });
             });
