@@ -10,6 +10,8 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="sportify"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+              android:value="AIzaSyAMjQ6xo0LYjnq4s44QJvQ3io9W00WzaB4"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -24,6 +26,7 @@
             <meta-data
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -31,3 +34,4 @@
         </activity>
     </application>
 </manifest>
+
